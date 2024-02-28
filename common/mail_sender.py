@@ -6,16 +6,14 @@ import time
 import ssl
 import base64
 
-try:
-    from StringIO import StringIO ## for Python 2
-except ImportError:
-    from io import StringIO ## for Python 3
+from io import StringIO
 
 class MailSender(object):
 	def __init__(self):
 		self.mail_server =""
 		self.rcpt_to = ""
 		self.email_data = ""
+		self.filename = None
 		self.helo = ""
 		self.mail_from = ""
 		self.starttls = False
@@ -23,9 +21,10 @@ class MailSender(object):
 		self.client_socket = None
 		self.tls_socket = None
 
-	def set_param(self, mail_server, rcpt_to, email_data, helo, mail_from, starttls=False, mode = "server", username = None, password = None, auth_proto = "LOGIN"):
+	def set_param(self, mail_server, rcpt_to, email_data, helo, mail_from, filename=None, starttls=False, mode = "server", username = None, password = None, auth_proto = "LOGIN"):
 		self.mail_server = mail_server
 		self.rcpt_to = rcpt_to
+		self.filename = filename
 		self.email_data = email_data
 		self.helo = helo
 		self.mail_from = mail_from
@@ -55,6 +54,15 @@ class MailSender(object):
 			self.tls_socket = tls_socket
 
 		self.client_socket = client_socket
+
+	def print_out_file(self, file_path):
+	
+		with open(file_path, 'r', encoding='utf-8') as file:
+			html_content = file.read()
+		
+		encoded_html_content = html_content.encode('utf-8')
+		
+		return encoded_html_content
 
 	def send_smtp_cmds(self, client_socket):
 		client_socket.send(b"ehlo "+self.helo+b"\r\n")
@@ -91,13 +99,22 @@ class MailSender(object):
 
 		client_socket.send(b"data\r\n")
 		time.sleep(0.1)
-		self.print_send_msg( "data\r\n")
+		self.print_send_msg("data\r\n")
 		self.print_recv_msg(client_socket)
 
-		client_socket.send(self.email_data+b"\r\n.\r\n")
-		time.sleep(0.1)
-		self.print_send_msg( self.email_data.decode("utf-8")+"\r\n.\r\n")
-		self.print_recv_msg(client_socket)
+		if self.filename:
+			new_filename = self.print_out_file(self.filename)
+			client_socket.send(self.email_data+b"\r\n"+new_filename+b"\r\n.\r\n")
+			time.sleep(0.1)
+			new_filename_str = new_filename.decode("utf-8") if isinstance(new_filename, bytes) else new_filename
+			email_data_str = self.email_data.decode("utf-8") if isinstance(self.email_data, bytes) else self.email_data
+			self.print_send_msg(email_data_str + "\r\n" + new_filename_str + "\r\n.\r\n")
+			self.print_recv_msg(client_socket)
+		else:
+			client_socket.send(self.email_data+b"\r\n.\r\n")
+			time.sleep(0.1)
+			self.print_send_msg(self.email_data.decode("utf-8")+"\r\n.\r\n")
+			self.print_recv_msg(client_socket)
 
 	def send_quit_cmd(self, client_socket):
 		client_socket.send(b"quit\r\n")

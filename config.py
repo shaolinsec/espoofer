@@ -1,3 +1,5 @@
+from common.common import print_out_file
+
 config = {
 	"attacker_site": b"attack.com", # attack.com
 	"legitimate_site_address": b"admin@legitimate.com", # From header address displayed to the end-user

@@ -2,6 +2,9 @@ import sys
 import simplejson as json
 import argparse
 
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 from colorama import init
 
 from common.common import *
@@ -14,6 +17,8 @@ import config
 test_cases = testcases.test_cases
 config = config.config
 
+file_name = ""
+
 def banner():
     print(("""%s                               ____         
   ___  _________  ____  ____  / __/__  _____
@@ -23,6 +28,9 @@ def banner():
         /_/                                 %s
     """ % ('\033[93m', '\033[0m')))
 
+# This file will return a path
+# I need to call args.htmlfile and return it into print_out_file
+# When print out file is called, I need to then return it into the testcases.py file
 
 def parser_error(errmsg):
     banner()
@@ -33,34 +41,25 @@ def parser_error(errmsg):
 
 def parse_args():
     # parse the arguments
-    parser = argparse.ArgumentParser(
+	parser = argparse.ArgumentParser(
         epilog='\tExample: \r\npython ' + sys.argv[0] + " -m s -id case_a1")
-    parser.error = parser_error
-    parser._optionals.title = "OPTIONS"
-    parser.add_argument(
-        '-m', '--mode', choices=['s', 'c', 'm'], default='s', help="Select mode: 's' (default) means server mode; 'c' means clien mode; 'm' means manually setting fields;")
-    parser.add_argument(
-        '-l', '--list', action='store', default=-1, const=None, nargs='?', help="List all test cases number and short description. `-l case_id' to see details of a specific case.")
-    parser.add_argument(
-        '-id', '--caseid', default=None, help="Select a specific test case to send email. Effective in server and client mode.")
-    parser.add_argument(
-    	'-tls', '--starttls', action='store_true', help="Enable STARTTLS command.")
+	parser.error = parser_error
+	parser._optionals.title = "OPTIONS"
+	parser.add_argument('-m', '--mode', choices=['s', 'c', 'm'], default='s', help="Select mode: 's' (default) means server mode; 'c' means clien mode; 'm' means manually setting fields;")
+	parser.add_argument('-l', '--list', action='store', default=-1, const=None, nargs='?', help="List all test cases number and short description. `-l case_id' to see details of a specific case.")
+	parser.add_argument('-id', '--caseid', default=None, help="Select a specific test case to send email. Effective in server and client mode.")
+	parser.add_argument('-tls', '--starttls', action='store_true', help="Enable STARTTLS command.")
+	parser.add_argument('-htmlfile', '--htmlfile', type=str, help='Path to the HTML file to be used for emails.')
+	
+	parser.add_argument('-helo', '--helo', default=None, help="Set HELO domain manually. Effective in manual mode only.")
+	parser.add_argument('-mfrom', '--mfrom', default=None, help="Set MAIL FROM address manually. Effective in manual mode only.")
+	parser.add_argument('-rcptto', '--rcptto', default=None, help="Set RCPT TO address manually. Effective in manual mode only.")
+	parser.add_argument('-data', '--data', default=None, help="Set raw email in DATA command. Effective in manual mode only.")
+	parser.add_argument('-ip', '--ip', default=None, help="Set mail server ip manually. Effective in manual mode only.")
+	parser.add_argument('-port', '--port', default=None, help="Set mail server port manually. Effective in manual mode only.")
 
-    parser.add_argument(
-        '-helo', '--helo', default=None, help="Set HELO domain manually. Effective in manual mode only.")
-    parser.add_argument(
-        '-mfrom', '--mfrom', default=None, help="Set MAIL FROM address manually. Effective in manual mode only.")
-    parser.add_argument(
-        '-rcptto', '--rcptto', default=None, help="Set RCPT TO address manually. Effective in manual mode only.")
-    parser.add_argument(
-        '-data', '--data', default=None, help="Set raw email in DATA command. Effective in manual mode only.")
-    parser.add_argument(
-        '-ip', '--ip', default=None, help="Set mail server ip manually. Effective in manual mode only.")
-    parser.add_argument(
-        '-port', '--port', default=None, help="Set mail server port manually. Effective in manual mode only.")
-
-    args = parser.parse_args()
-    return args
+	args = parser.parse_args()
+	return args
 
 def check_configs():
 	if config["case_id"].decode("utf-8") not in test_cases:
@@ -91,6 +90,9 @@ def list_test_cases(case_id):
 		else:
 			print("Sorry, case_id not found in testcases.")
 
+def get_me_the_file(file_path):
+	return file_path
+
 def main():
 	init()
 	args = parse_args()
@@ -109,7 +111,7 @@ def main():
 		return -1
 
 	print("Start sending emails...")
-	
+
 	if args.mode == "s":
 		mail_server = config["server_mode"]['recv_mail_server']
 		if not mail_server:
