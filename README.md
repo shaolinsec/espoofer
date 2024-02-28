@@ -71,12 +71,6 @@ espoofer has three work modes: *server* ('s', default mode), *client* ('c') and 
 Figure 2. Three types of attackers and their work modes
 </p>
 
-## WARNING
-
-:warning: Please do not use this with your home IP address as it will get blocked by SPAMHAUS or Spam Filtering Services :warning:
-
-#### Usage 
-
 ```
                                ____         
     ___  _________  ____  ____  / __/__  _____
@@ -116,6 +110,10 @@ OPTIONS:
 
 Example: python espoofer2.py -m s -id case_a1
 ```
+
+## WARNING
+
+:warning: Please do not use this with your home IP address as it will get blocked by SPAMHAUS or Spam Filtering Services :warning:
 
 #### Server mode
 To run espoofer in server mode, you need to have: 1) an IP address (`1.2.3.4`), which outgoing port 25 is not blocked by the ISP, and 2) a domain (`attack.com`). 
