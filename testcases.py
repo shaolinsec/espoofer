@@ -8,12 +8,6 @@ import config
 # For client mode, all case_id should start with 'client_'. attacker@example.com and admin@example.com in those cases will be replaced.
 #
 
-# Steve notes:
-"""
-I want to put the file name here... but I want to get it from args.htmlfile
-How the fuck do i do that????
-"""
-
 test_cases = {
     "server_a1": {
         "helo": b"helo.attack.com",
