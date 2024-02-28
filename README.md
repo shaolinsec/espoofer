@@ -71,6 +71,10 @@ espoofer has three work modes: *server* ('s', default mode), *client* ('c') and 
 Figure 2. Three types of attackers and their work modes
 </p>
 
+## WARNING
+
+:warning: Please do not use this with your home IP address as it will get blocked by SPAMHAUS or Spam Filtering Services :warning:
+
 #### Usage 
 
 ```
