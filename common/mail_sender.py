@@ -190,7 +190,7 @@ class MailSender(object):
 			line  = self.read_line(client_socket)
 			msg += line
 			if self.contains_smtp_error(msg):
-				sys.exit("Message failed to send: ", msg)
+				sys.exit("Message failed to send: " + msg)
 			if self.verbose:
 				print(line) 
 			if "-" not in line:
