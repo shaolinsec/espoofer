@@ -79,10 +79,28 @@ Figure 2. Three types of attackers and their work modes
     \___/____/ .___/\____/\____/_/  \___/_/     
             /_/                                 
         
-usage: espoofer2.py [-h] [-m {s,c,m}] [-l [LIST]] [-id CASEID] [-tls] [-htmlfile HTMLFILE] [-subject SUBJECT] [-sender SENDER] [-helo HELO] [-mfrom MFROM] [-rcptto RCPTTO] [-data DATA] [-ip IP] [-port PORT]
+usage: espoofer2.py [-h] [-htmlfile HTMLFILE] [-subject SUBJECT] [-sender SENDER] [-nofromheader] [-toheader] [-ccheader] [-bccheader] [-name NAME] [-v] [-m {s,c,m}] [-l [LIST]] [-id CASEID] [-tls] [-helo HELO] [-mfrom MFROM]
+                    [-rcptto RCPTTO] [-data DATA] [-ip IP] [-port PORT]
 
 OPTIONS:
   -h, --help            show this help message and exit
+  -htmlfile HTMLFILE, --htmlfile HTMLFILE
+                        Path to the HTML file to be used for emails.
+  -subject SUBJECT, --subject SUBJECT
+                        Subject Line.
+  -sender SENDER, --sender SENDER
+                        Sender to spoof
+  -nofromheader, --nofromheader
+                        Option to remove "From Header"
+  -toheader, --toheader
+                        Configure the message to use "To:"
+  -ccheader, --ccheader
+                        Configure the message to use "Cc:"
+  -bccheader, --bccheader
+                        Configure the message to use "Bcc:"
+  -name NAME, --name NAME
+                        Name for person you want to impersonate
+  -v, --verbose         Increase output verbosity
   -m {s,c,m}, --mode {s,c,m}
                         Select mode: 's' (default) means server mode; 'c' means clien mode; 'm' means manually setting fields;
   -l [LIST], --list [LIST]
@@ -90,12 +108,6 @@ OPTIONS:
   -id CASEID, --caseid CASEID
                         Select a specific test case to send email. Effective in server and client mode.
   -tls, --starttls      Enable STARTTLS command.
-  -htmlfile HTMLFILE, --htmlfile HTMLFILE
-                        Path to the HTML file to be used for emails.
-  -subject SUBJECT, --subject SUBJECT
-                        Subject Line.
-  -sender SENDER, --sender SENDER
-                        Sender to spoof
   -helo HELO, --helo HELO
                         Set HELO domain manually. Effective in manual mode only.
   -mfrom MFROM, --mfrom MFROM
@@ -107,8 +119,6 @@ OPTIONS:
   -ip IP, --ip IP       Set mail server ip manually. Effective in manual mode only.
   -port PORT, --port PORT
                         Set mail server port manually. Effective in manual mode only.
-
-Example: python espoofer2.py -m s -id case_a1
 ```
 
 ## WARNING
