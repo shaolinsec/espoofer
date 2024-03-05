@@ -71,6 +71,50 @@ espoofer has three work modes: *server* ('s', default mode), *client* ('c') and 
 Figure 2. Three types of attackers and their work modes
 </p>
 
+```
+                               ____         
+    ___  _________  ____  ____  / __/__  _____
+    / _ \/ ___/ __ \/ __ \/ __ \/ /_/ _ \/ ___/
+    /  __(__  ) /_/ / /_/ / /_/ / __/  __/ /    
+    \___/____/ .___/\____/\____/_/  \___/_/     
+            /_/                                 
+        
+usage: espoofer2.py [-h] [-m {s,c,m}] [-l [LIST]] [-id CASEID] [-tls] [-htmlfile HTMLFILE] [-subject SUBJECT] [-sender SENDER] [-helo HELO] [-mfrom MFROM] [-rcptto RCPTTO] [-data DATA] [-ip IP] [-port PORT]
+
+OPTIONS:
+  -h, --help            show this help message and exit
+  -m {s,c,m}, --mode {s,c,m}
+                        Select mode: 's' (default) means server mode; 'c' means clien mode; 'm' means manually setting fields;
+  -l [LIST], --list [LIST]
+                        List all test cases number and short description. `-l case_id' to see details of a specific case.
+  -id CASEID, --caseid CASEID
+                        Select a specific test case to send email. Effective in server and client mode.
+  -tls, --starttls      Enable STARTTLS command.
+  -htmlfile HTMLFILE, --htmlfile HTMLFILE
+                        Path to the HTML file to be used for emails.
+  -subject SUBJECT, --subject SUBJECT
+                        Subject Line.
+  -sender SENDER, --sender SENDER
+                        Sender to spoof
+  -helo HELO, --helo HELO
+                        Set HELO domain manually. Effective in manual mode only.
+  -mfrom MFROM, --mfrom MFROM
+                        Set MAIL FROM address manually. Effective in manual mode only.
+  -rcptto RCPTTO, --rcptto RCPTTO
+                        Set RCPT TO address manually. Effective in manual mode only.
+  -data DATA, --data DATA
+                        Set raw email in DATA command. Effective in manual mode only.
+  -ip IP, --ip IP       Set mail server ip manually. Effective in manual mode only.
+  -port PORT, --port PORT
+                        Set mail server port manually. Effective in manual mode only.
+
+Example: python espoofer2.py -m s -id case_a1
+```
+
+## WARNING
+
+:warning: Please do not use this with your home IP address as it will get blocked by SPAMHAUS or Spam Filtering Services :warning:
+
 #### Server mode
 To run espoofer in server mode, you need to have: 1) an IP address (`1.2.3.4`), which outgoing port 25 is not blocked by the ISP, and 2) a domain (`attack.com`). 
 
