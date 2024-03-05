@@ -1,10 +1,23 @@
-from common.common import print_out_file
+
+import random
 
 config = {
 	"attacker_site": b"attack.com", # attack.com
 	"legitimate_site_address": b"admin@legitimate.com", # From header address displayed to the end-user
 	"victim_address": b"victim@victim.com", # RCPT TO and message.To header address, 
 	"case_id": b"server_a1", #  You can find all case_id using -l option.
+
+	"words_user": {
+        b"noreply@",
+        b"donotreply@",
+        b"first@",
+        b"second@",
+        b"third@",
+        b"fourth@",
+        b"mail@",
+        b"teams@",
+        b"it@"
+	},
 
 	# The following fields are optional
 	"server_mode":{

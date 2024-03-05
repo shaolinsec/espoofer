@@ -221,7 +221,7 @@ test_cases = {
         "data": {
             "from_header": b"From:" + bs64encode(b"<first@attack.com>")+ b",<second@attack.com>\r\n",
             "to_header": b"To: <victim@victim.com>\r\n",
-            "subject_header": b"Subject: Where them girls at?\r\n",
+            "subject_header": b"Subject: Test Subject\r\n",
             "body": b"",
             "other_headers": b"Date: " + get_date() + b"\r\n" + b'Sender: <s@legitimate.com>\r\nContent-Type: text/html; charset="ISO-8859-1"\r\nContent-Transfer-Encoding: 7bit\r\nMIME-Version: 1.0\r\nMessage-ID: <1538085644648.096e3d4e-bc38-4027-b57e-' + id_generator() + b'@message-ids.attack.com>\r\nX-Email-Header: Microsoft Outlook 16.0\r\n\r\n',
         },
