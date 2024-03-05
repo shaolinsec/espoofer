@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 
-import random
-
-=======
->>>>>>> 2a26dca3f190aeb31e486d314acaa8810fbdc4b6
 config = {
 	"attacker_site": b"attack.com", # attack.com
 	"legitimate_site_address": b"admin@legitimate.com", # From header address displayed to the end-user
